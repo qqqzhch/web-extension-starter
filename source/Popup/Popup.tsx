@@ -1,31 +1,31 @@
+// import  { useContext,FC } from 'react';
 import * as React from 'react';
 // import {browser, Tabs} from 'webextension-polyfill-ts';
 
-import './styles.scss';
+// import './styles.scss';
+import *  as RR from 'react-redux'
 
 import {  
   useBackgroundDispatch,
   // useBackgroundSelector,
-  RootState
+  // RootState
 } from "./hooks/redux-hooks"
 
 import { decrement, increment } from '../Background/store/counterSlice'
 
-import {connect} from 'react-redux';
+// import {connect} from 'react-redux';
+// import {ReactReduxContext} from 'react-redux';
 
 
 
-const Popup : React.FC = (props:any) => {
+const Popup : React.FC = () => {
+  // const context = useContext(ReactReduxContext);
+  // console.log('context',context)
 
   const dispatch = useBackgroundDispatch()
-
-  // const count = useBackgroundSelector(
-  //   (state: RootState) =>{
-  //    console.log('state',state)
-  //     // return state.counter.value
-  //     return 0
-  //   } 
-  // )
+  console.log('useStoreSelector',RR.useSelector)
+  const count = RR.useSelector((state: any) => state.counter.value)
+  
 
   function openWebPage(): void {
   
@@ -41,7 +41,7 @@ const Popup : React.FC = (props:any) => {
 
   return (
     <section id="popup">
-        <span>{props.count}</span>
+        <span>{count} </span>
       <h2>WEB-EXTENSION-STARTER</h2>
       <button
         id="options__button"
@@ -66,10 +66,12 @@ const Popup : React.FC = (props:any) => {
   );
 };
 
-const mapStateToProps = (state:RootState) => {
-  return {
-    count: state.counter.value
-  };
-};
+// const mapStateToProps = (state:RootState) => {
+//   return {
+//     count: state.counter.value
+//   };
+// };
 
-export default connect(mapStateToProps)(Popup) ;
+export default Popup ;
+
+// export default connect(mapStateToProps)(Popup) ;

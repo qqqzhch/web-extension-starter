@@ -12,6 +12,7 @@ const store = new Store();
 store.ready().then(() => {
     // The store implements the same interface as Redux's store
     // so you can use tools like `react-redux` no problem!
+    console.log('store',store)
     ReactDOM.render(
       <Provider store={store}>
         <Popup />
