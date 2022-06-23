@@ -1,55 +1,75 @@
 import * as React from 'react';
-import {browser, Tabs} from 'webextension-polyfill-ts';
+// import {browser, Tabs} from 'webextension-polyfill-ts';
 
 import './styles.scss';
 
-function openWebPage(url: string): Promise<Tabs.Tab> {
-  return browser.tabs.create({url});
-}
+import {  
+  useBackgroundDispatch,
+  // useBackgroundSelector,
+  RootState
+} from "./hooks/redux-hooks"
 
-const Popup: React.FC = () => {
+import { decrement, increment } from '../Background/store/counterSlice'
+
+import {connect} from 'react-redux';
+
+
+
+const Popup : React.FC = (props:any) => {
+
+  const dispatch = useBackgroundDispatch()
+
+  // const count = useBackgroundSelector(
+  //   (state: RootState) =>{
+  //    console.log('state',state)
+  //     // return state.counter.value
+  //     return 0
+  //   } 
+  // )
+
+  function openWebPage(): void {
+  
+    dispatch(increment())
+    console.log('click')
+  }
+
+  function openWebPage2(): void {
+  
+    dispatch(decrement())
+    console.log('click')
+  }
+
   return (
     <section id="popup">
+        <span>{props.count}</span>
       <h2>WEB-EXTENSION-STARTER</h2>
       <button
         id="options__button"
         type="button"
-        onClick={(): Promise<Tabs.Tab> => {
-          return openWebPage('options.html');
+        onClick={():void => {
+          return openWebPage();
         }}
       >
-        Options Page
+        test click
       </button>
-      <div className="links__holder">
-        <ul>
-          <li>
-            <button
-              type="button"
-              onClick={(): Promise<Tabs.Tab> => {
-                return openWebPage(
-                  'https://github.com/abhijithvijayan/web-extension-starter'
-                );
-              }}
-            >
-              GitHub
-            </button>
-          </li>
-          <li>
-            <button
-              type="button"
-              onClick={(): Promise<Tabs.Tab> => {
-                return openWebPage(
-                  'https://www.buymeacoffee.com/abhijithvijayan'
-                );
-              }}
-            >
-              Buy Me A Coffee
-            </button>
-          </li>
-        </ul>
-      </div>
+      <button
+        id="options__button"
+        type="button"
+        onClick={():void => {
+          return openWebPage2();
+        }}
+      >
+        test click2
+      </button>
+      
     </section>
   );
 };
 
-export default Popup;
+const mapStateToProps = (state:RootState) => {
+  return {
+    count: state.counter.value
+  };
+};
+
+export default connect(mapStateToProps)(Popup) ;

@@ -178,15 +178,15 @@ module.exports = {
   optimization: {
     minimize: true,
     minimizer: [
-      new TerserPlugin({
-        parallel: true,
-        terserOptions: {
-          format: {
-            comments: false,
-          },
-        },
-        extractComments: false,
-      }),
+      // new TerserPlugin({
+      //   parallel: true,
+      //   terserOptions: {
+      //     format: {
+      //       comments: false,
+      //     },
+      //   },
+      //   extractComments: false,
+      // }),
       new OptimizeCSSAssetsPlugin({
         cssProcessorPluginOptions: {
           preset: ['default', {discardComments: {removeAll: true}}],

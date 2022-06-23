@@ -1,5 +1,8 @@
 <h1 align="center">🚀 web-extension-starter</h1>
 <p align="center">Web Extension starter to build "Write Once Run on Any Browser" extension</p>
+
+https://github.com/earthdao/wallet/blob/master/package.json
+
 <div align="center">
   <a href="https://travis-ci.com/abhijithvijayan/web-extension-starter">
     <img src="https://travis-ci.com/abhijithvijayan/web-extension-starter.svg?branch=react-typescript" alt="Travis Build" />
