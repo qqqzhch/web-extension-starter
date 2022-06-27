@@ -8,10 +8,13 @@ import *  as RR from 'react-redux'
 import {  
   useBackgroundDispatch,
   // useBackgroundSelector,
-  // RootState
+  RootState
 } from "./hooks/redux-hooks"
 
-import { decrement, increment } from '../Background/store/counterSlice'
+import { decrement, increment,fetchUserById } from '../Background/store/counterSlice'
+import {getToken} from '../Background/api/tokenApi'
+
+console.log('getToken',getToken)
 
 // import {connect} from 'react-redux';
 // import {ReactReduxContext} from 'react-redux';
@@ -24,7 +27,11 @@ const Popup : React.FC = () => {
 
   const dispatch = useBackgroundDispatch()
   console.log('useStoreSelector',RR.useSelector)
-  const count = RR.useSelector((state: any) => state.counter.value)
+  const count = RR.useSelector((state: RootState) => state.counter.value)
+  const list = RR.useSelector((state: RootState) => state.counter.list.entities)
+  const loading = RR.useSelector((state: RootState) => state.counter.list.loading)
+  
+  console.log()
   
 
   function openWebPage(): void {
@@ -39,8 +46,15 @@ const Popup : React.FC = () => {
     console.log('click')
   }
 
+  function openWebPage3(): void {
+    console.log('click3')
+    dispatch(fetchUserById())
+    console.log('click')
+  }
+
   return (
     <section id="popup">
+      
         <span>{count} </span>
       <h2>WEB-EXTENSION-STARTER</h2>
       <button
@@ -61,6 +75,16 @@ const Popup : React.FC = () => {
       >
         test click2
       </button>
+      <button
+        id="options__button"
+        type="button"
+        onClick={():void => {
+          return openWebPage3();
+        }}
+      >
+        test click3
+      </button>
+      {list}|{loading}
       
     </section>
   );

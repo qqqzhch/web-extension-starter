@@ -1,11 +1,33 @@
-import { createSlice, PayloadAction } from '@reduxjs/toolkit'
+import { createSlice, PayloadAction,createAsyncThunk } from '@reduxjs/toolkit'
+require('isomorphic-fetch');
+
+// First, create the thunk
+const fetchUserById = createAsyncThunk(
+  'tokens',
+  async () => {
+    const response = await fetch('https://app.tryroll.com/tokens.json')
+    return response.json()
+  }
+)
+
+interface TokenList {
+  entities:any[]
+  loading: 'idle' | 'pending' | 'succeeded' | 'failed'
+}
+
+const list = {
+  entities: [],
+  loading: 'idle',
+} as TokenList
 
 export interface CounterState {
-  value: number
+  value: number,
+  list:TokenList
 }
 
 const initialState: CounterState = {
   value: 0,
+  list:list
 }
 
 export const counterSlice = createSlice({
@@ -26,9 +48,19 @@ export const counterSlice = createSlice({
       state.value += action.payload
     },
   },
+  extraReducers: (builder) => {
+    
+    // Add reducers for additional action types here, and handle loading state as needed
+    builder.addCase(fetchUserById.fulfilled, (state, action) => {
+      // Add user to the state array
+      state.list.entities.push(action.payload)
+    })
+  }
 })
 
 // Action creators are generated for each case reducer function
 export const { increment, decrement, incrementByAmount } = counterSlice.actions
 
 export default counterSlice.reducer
+
+export {fetchUserById}
