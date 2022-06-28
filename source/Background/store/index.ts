@@ -1,14 +1,16 @@
 import { configureStore } from "@reduxjs/toolkit"
 import counterReducer from './counterSlice'
+import tokenSlice from './tokenSlice'
 
-import {TokenApi } from '../api/tokenApi';
+import {fetchTokenMiddleware} from './midd/queryq'
+
 
 export const store = configureStore({
   reducer: {
     counter: counterReducer,
-    [TokenApi.reducerPath]:TokenApi.reducer
+    token:tokenSlice
   },
-  middleware: (getDefaultMiddleware) => getDefaultMiddleware().concat(TokenApi.middleware)
+  middleware: (getDefaultMiddleware) => getDefaultMiddleware().concat(fetchTokenMiddleware)
 
 })
 

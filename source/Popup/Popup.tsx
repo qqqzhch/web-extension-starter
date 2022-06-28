@@ -11,10 +11,13 @@ import {
   RootState
 } from "./hooks/redux-hooks"
 
-import { decrement, increment,fetchUserById } from '../Background/store/counterSlice'
-import {getToken} from '../Background/api/tokenApi'
+import { decrement, increment } from '../Background/store/counterSlice'
 
-console.log('getToken',getToken)
+import  {fetchToken} from '../Background/store/tokenSlice'
+
+
+
+console.log('fetchToken',fetchToken())
 
 // import {connect} from 'react-redux';
 // import {ReactReduxContext} from 'react-redux';
@@ -28,10 +31,11 @@ const Popup : React.FC = () => {
   const dispatch = useBackgroundDispatch()
   console.log('useStoreSelector',RR.useSelector)
   const count = RR.useSelector((state: RootState) => state.counter.value)
-  const list = RR.useSelector((state: RootState) => state.counter.list.entities)
-  const loading = RR.useSelector((state: RootState) => state.counter.list.loading)
+  const tokens = RR.useSelector((state: RootState) => state.token.value)
+  console.log(tokens,typeof tokens)
   
-  console.log()
+  
+  console.log('-')
   
 
   function openWebPage(): void {
@@ -48,8 +52,14 @@ const Popup : React.FC = () => {
 
   function openWebPage3(): void {
     console.log('click3')
-    dispatch(fetchUserById())
+    
     console.log('click')
+  }
+
+  function openWebPage4(): void {
+    console.log('click4')
+    dispatch(fetchToken())
+    console.log('click4')
   }
 
   return (
@@ -84,7 +94,22 @@ const Popup : React.FC = () => {
       >
         test click3
       </button>
-      {list}|{loading}
+      <button
+        id="options__button"
+        type="button"
+        onClick={():void => {
+          return openWebPage4();
+        }}
+      >
+        获取数据
+      </button>
+      {/* {typeof tokens} */}
+      {tokens[1]?.name}
+
+      {tokens.map((element:any)=> {
+       return (<div>{element.name}</div>)
+      })}
+      
       
     </section>
   );
