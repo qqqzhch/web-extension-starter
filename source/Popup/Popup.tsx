@@ -32,6 +32,10 @@ const Popup : React.FC = () => {
   console.log('useStoreSelector',RR.useSelector)
   const count = RR.useSelector((state: RootState) => state.counter.value)
   const tokens = RR.useSelector((state: RootState) => state.token.value)
+  const list = RR.useSelector((state: RootState) => state.nftdata.value)
+
+
+
   console.log(tokens,typeof tokens)
   
   
@@ -62,11 +66,26 @@ const Popup : React.FC = () => {
     console.log('click4')
   }
 
+  function openWebPage5(): void {
+    console.log('click5')
+    window.postMessage('test1',"*")
+    console.log('click5')
+  }
+
   return (
     <section id="popup">
       
         <span>{count} </span>
       <h2>WEB-EXTENSION-STARTER</h2>
+      <button
+        id="options__button"
+        type="button"
+        onClick={():void => {
+          return openWebPage5();
+        }}
+      >
+        发送信息
+      </button>
       <button
         id="options__button"
         type="button"
@@ -106,8 +125,11 @@ const Popup : React.FC = () => {
       {/* {typeof tokens} */}
       {tokens[1]?.name}
 
-      {tokens.map((element:any)=> {
-       return (<div>{element.name}</div>)
+      {list.map((element:any)=> {
+       return (<div>
+         <img src={element.imgurl}></img>
+         {element.name}
+         </div>)
       })}
       
       

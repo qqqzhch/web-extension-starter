@@ -9,6 +9,9 @@ import {startService,Jobname} from './services/index'
 import {emitter} from './services/event'
 import {increment} from './store/counterSlice'
 
+import {channel,providerbridge} from  './services/provider-bridge'
+
+import {addnft} from './store/nftSlice'
 
 wrapStore(store);
 
@@ -23,5 +26,18 @@ browser.runtime.onInstalled.addListener((): void => {
     console.log(data)
     store.dispatch(increment())
   });
+  emitter.on(channel, (data:any) => {
+    console.log('channel',data)
+    if(data.site== "opensea"){
+      store.dispatch(addnft(data))
+      console.log(store.getState())
+
+    }
+  });
+
+  let bridge = new providerbridge();
+  console.log(bridge)
+
+
 
 });
