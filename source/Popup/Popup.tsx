@@ -1,6 +1,6 @@
 // import  { useContext,FC } from 'react';
 import * as React from 'react';
-// import {browser, Tabs} from 'webextension-polyfill-ts';
+import {browser} from 'webextension-polyfill-ts';
 
 // import './styles.scss';
 import *  as RR from 'react-redux'
@@ -14,6 +14,7 @@ import {
 import { decrement, increment } from '../Background/store/counterSlice'
 
 import  {fetchToken} from '../Background/store/tokenSlice'
+import {fetchtable} from '../Background/store/dbSlice'
 
 
 
@@ -33,6 +34,7 @@ const Popup : React.FC = () => {
   const count = RR.useSelector((state: RootState) => state.counter.value)
   const tokens = RR.useSelector((state: RootState) => state.token.value)
   const list = RR.useSelector((state: RootState) => state.nftdata.value)
+  const table1 = RR.useSelector((state: RootState) => state.db.table1)
 
 
 
@@ -72,11 +74,29 @@ const Popup : React.FC = () => {
     console.log('click5')
   }
 
+  function openWebPage6():void{
+    browser.tabs.create({ url: "options.html" });
+  }
+
+function openWebPage7():void{
+  
+  dispatch(fetchtable())
+}
+
   return (
     <section id="popup">
       
         <span>{count} </span>
       <h2>WEB-EXTENSION-STARTER</h2>
+      <button
+        id="options__button"
+        type="button"
+        onClick={():void => {
+          return openWebPage6();
+        }}
+      >
+        打开设置页面
+      </button>
       <button
         id="options__button"
         type="button"
@@ -122,6 +142,25 @@ const Popup : React.FC = () => {
       >
         获取数据
       </button>
+      <button
+        id="options__button"
+        type="button"
+        onClick={():void => {
+          return openWebPage7();
+        }}
+      >
+        获取数据库中的数据
+      </button>
+      
+      {table1.map((element:any)=>{
+        return (
+          <div>
+          {element.first}
+          {element.last}
+          </div>
+          )
+
+      })}
       {/* {typeof tokens} */}
       {tokens[1]?.name}
 

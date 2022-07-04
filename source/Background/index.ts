@@ -13,13 +13,15 @@ import {channel,providerbridge} from  './services/provider-bridge'
 
 import {addnft} from './store/nftSlice'
 
+import {getOrCreateDB} from './services/db'
+
 wrapStore(store);
 
 export type BackgroundDispatch =  AppDispatch;
 
 export type  { RootState }
 
-browser.runtime.onInstalled.addListener((): void => {
+browser.runtime.onInstalled.addListener(async (): Promise<void> => {
   console.emoji('🦄', 'extension installed');
   startService();
   emitter.on(Jobname, (data:string) => {
@@ -34,8 +36,8 @@ browser.runtime.onInstalled.addListener((): void => {
 
     }
   });
-
-  let bridge = new providerbridge();
+  let db = await getOrCreateDB();
+  let bridge = new providerbridge(db);
   console.log(bridge)
 
 

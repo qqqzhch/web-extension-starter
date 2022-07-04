@@ -78,28 +78,28 @@ function myFunction(port:any) {
   node.style.top='50%'
   node.onclick=function(){
     console.log('点击',port)
-    if('https://opensea.io'==windowOriginAtLoadTime){
-      let imgurl = (document.querySelector(".Image--image")as HTMLImageElement) .src;
-      let name = (document.querySelector(".item--collection-detail") as HTMLElement) .innerText;
+    // if('https://opensea.io'==windowOriginAtLoadTime){
+    //   let imgurl = (document.querySelector(".Image--image")as HTMLImageElement) .src;
+    //   let name = (document.querySelector(".item--collection-detail") as HTMLElement) .innerText;
     if(close){
       return ;
     }
       port.postMessage({
-        imgurl,
-        name,
+        imgurl:'https://fanyi-cdn.cdn.bcebos.com/static/translation/img/header/logo_e835568.png',
+        name:'test',
         site:'opensea'
       })
-    }
+    // }
     
   }
   
-  if(['https://opensea.io'].indexOf(windowOriginAtLoadTime)>-1){
+  // if(['https://opensea.io'].indexOf(windowOriginAtLoadTime)>-1){
     // Append the "li" node to the list:
     setTimeout(()=>{
       console.log('插入元素')
       document.body.appendChild(node);
     },1000*10) 
-  }
+  // }
   
   
   }

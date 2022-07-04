@@ -2,17 +2,20 @@ import { configureStore } from "@reduxjs/toolkit"
 import counterReducer from './counterSlice'
 import tokenSlice from './tokenSlice'
 import nftSlice from './nftSlice'
+import DBSlice from './dbSlice'
 
 import {fetchTokenMiddleware} from './midd/queryq'
+import {fetchDBiddleware} from './midd/dbdata'
 
 
 export const store = configureStore({
   reducer: {
     counter: counterReducer,
     token:tokenSlice,
-    nftdata:nftSlice
+    nftdata:nftSlice,
+    db:DBSlice
   },
-  middleware: (getDefaultMiddleware) => getDefaultMiddleware().concat(fetchTokenMiddleware)
+  middleware: (getDefaultMiddleware) => getDefaultMiddleware().concat([fetchTokenMiddleware,fetchDBiddleware])
 
 })
 
