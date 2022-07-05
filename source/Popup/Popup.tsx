@@ -1,6 +1,6 @@
 // import  { useContext,FC } from 'react';
 import * as React from 'react';
-import {browser} from 'webextension-polyfill-ts';
+// import {browser} from 'webextension-polyfill-ts';
 
 // import './styles.scss';
 import *  as RR from 'react-redux'
@@ -11,10 +11,10 @@ import {
   RootState
 } from "./hooks/redux-hooks"
 
-import { decrement, increment } from '../Background/store/counterSlice'
+// import { decrement, increment } from '../Background/store/counterSlice'
 
 import  {fetchToken} from '../Background/store/tokenSlice'
-import {fetchtable} from '../Background/store/dbSlice'
+import {fetchArtblock} from '../Background/store/dbSlice'
 
 
 
@@ -31,64 +31,66 @@ const Popup : React.FC = () => {
 
   const dispatch = useBackgroundDispatch()
   console.log('useStoreSelector',RR.useSelector)
-  const count = RR.useSelector((state: RootState) => state.counter.value)
-  const tokens = RR.useSelector((state: RootState) => state.token.value)
-  const list = RR.useSelector((state: RootState) => state.nftdata.value)
+  dispatch(fetchArtblock())
+  // const count = RR.useSelector((state: RootState) => state.counter.value)
+  // const tokens = RR.useSelector((state: RootState) => state.token.value)
+  // const list = RR.useSelector((state: RootState) => state.nftdata.value)
+
   const table1 = RR.useSelector((state: RootState) => state.db.table1)
 
 
 
-  console.log(tokens,typeof tokens)
+//   console.log(tokens,typeof tokens)
   
   
-  console.log('-')
+//   console.log('-')
   
 
-  function openWebPage(): void {
+//   function openWebPage(): void {
   
-    dispatch(increment())
-    console.log('click')
-  }
+//     dispatch(increment())
+//     console.log('click')
+//   }
 
-  function openWebPage2(): void {
+//   function openWebPage2(): void {
   
-    dispatch(decrement())
-    console.log('click')
-  }
+//     dispatch(decrement())
+//     console.log('click')
+//   }
 
-  function openWebPage3(): void {
-    console.log('click3')
+//   function openWebPage3(): void {
+//     console.log('click3')
     
-    console.log('click')
-  }
+//     console.log('click')
+//   }
 
-  function openWebPage4(): void {
-    console.log('click4')
-    dispatch(fetchToken())
-    console.log('click4')
-  }
+//   function openWebPage4(): void {
+//     console.log('click4')
+//     dispatch(fetchToken())
+//     console.log('click4')
+//   }
 
-  function openWebPage5(): void {
-    console.log('click5')
-    window.postMessage('test1',"*")
-    console.log('click5')
-  }
+//   function openWebPage5(): void {
+//     console.log('click5')
+//     window.postMessage('test1',"*")
+//     console.log('click5')
+//   }
 
-  function openWebPage6():void{
-    browser.tabs.create({ url: "options.html" });
-  }
+//   function openWebPage6():void{
+//     browser.tabs.create({ url: "options.html" });
+//   }
 
-function openWebPage7():void{
+// function openWebPage7():void{
   
-  dispatch(fetchtable())
-}
+//   dispatch(fetchArtblock())
+// }
 
   return (
     <section id="popup">
       
-        <span>{count} </span>
-      <h2>WEB-EXTENSION-STARTER</h2>
-      <button
+        
+      <h2>Art Blocks</h2>
+      {/* <button
         id="options__button"
         type="button"
         onClick={():void => {
@@ -150,26 +152,19 @@ function openWebPage7():void{
         }}
       >
         获取数据库中的数据
-      </button>
+      </button> */}
       
       {table1.map((element:any)=>{
+        let url = "https://res.cloudinary.com/art-blocks/image/fetch/f_auto,c_limit,w_384,q_auto/https://artblocks-mainnet.s3.amazonaws.com/"+element.tokenid+".png";
         return (
           <div>
-          {element.first}
-          {element.last}
+          <img src={url}/>
+          
           </div>
           )
 
       })}
-      {/* {typeof tokens} */}
-      {tokens[1]?.name}
-
-      {list.map((element:any)=> {
-       return (<div>
-         <img src={element.imgurl}></img>
-         {element.name}
-         </div>)
-      })}
+      
       
       
     </section>

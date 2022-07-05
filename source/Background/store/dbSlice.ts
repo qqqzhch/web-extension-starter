@@ -15,14 +15,14 @@ export const DBSlice = createSlice({
   name: 'db',
   initialState,
   reducers: {
-    fetchtable: () => {
+    fetchArtblock: () => {
       // Redux Toolkit allows us to write "mutating" logic in reducers. It
       // doesn't actually mutate the state because it uses the Immer library,
       // which detects changes to a "draft state" and produces a brand new
       // immutable state based off those changes
       
     },
-    tableLoaded: (state, action: PayloadAction<any>) => {
+    artblockLoaded: (state, action: PayloadAction<any>) => {
       console.log('action.payload',action.payload)
       state.table1 = action.payload
     },
@@ -30,7 +30,7 @@ export const DBSlice = createSlice({
 })
 
 // Action creators are generated for each case reducer function
-export const { fetchtable,tableLoaded } = DBSlice.actions
+export const { fetchArtblock,artblockLoaded } = DBSlice.actions
 
 export default DBSlice.reducer
 
