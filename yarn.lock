@@ -10598,7 +10598,7 @@ web3-shh@1.7.4:
     web3-core-subscriptions "1.7.4"
     web3-net "1.7.4"
 
-web3-utils@1.7.4:
+web3-utils@1.7.4, web3-utils@^1.7.4:
   version "1.7.4"
   resolved "https://registry.npmjs.org/web3-utils/-/web3-utils-1.7.4.tgz#eb6fa3706b058602747228234453811bbee017f5"
   integrity sha512-acBdm6Evd0TEZRnChM/MCvGsMwYKmSh7OaUfNf5OKG0CIeGWD/6gqLOWIwmwSnre/2WrA1nKGId5uW2e5EfluA==

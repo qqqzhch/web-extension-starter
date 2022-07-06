@@ -37,14 +37,19 @@ export  function startService(){
     name:string
   }) {
       console.log("on alarm: " + alarmInfo.name);
-      let Blance = await getBlance('0xa7d8d9ef8d8ce8992df33d8b8cf4aebabd5bd270')
-      let tokenlist = await getList('0xa7d8d9ef8d8ce8992df33d8b8cf4aebabd5bd270')
-      console.log('Blance',Blance)
-      console.log('tokenlist',tokenlist)
-      //['95000562', '95000549', '95000835']
       let db = await getOrCreateDB();
-      let result = await db.addaddartList(tokenlist)
-      console.log('add nft list',result)
+      let useraddress = await db.getaddress();
+      if(useraddress!=null){
+        let Blance = await getBlance(useraddress)
+        let tokenlist = await getList(useraddress)
+        console.log('Blance',Blance)
+        console.log('tokenlist',tokenlist)
+        //['95000562', '95000549', '95000835']
+      
+        let result = await db.addaddartList(tokenlist,useraddress)
+        console.log('add nft list',result)
+      }
+      
 
 
       //https://res.cloudinary.com/art-blocks/image/fetch/f_auto,c_limit,w_384,q_auto/https://artblocks-mainnet.s3.amazonaws.com/95000562.png
