@@ -1,3 +1,6 @@
+
+http://www.kkh86.com/it/chrome-extension-doc/extensions/permission_warnings.html
+
 <h1 align="center">🚀 web-extension-starter</h1>
 <p align="center">Web Extension starter to build "Write Once Run on Any Browser" extension</p>
 

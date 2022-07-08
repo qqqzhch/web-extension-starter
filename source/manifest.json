@@ -16,9 +16,7 @@
   "permissions": [
     "activeTab",
     "storage",
-    "alarms",
-    "http://*/*",
-    "https://*/*"
+    "alarms"
   ],
 
   "content_security_policy": "script-src 'self'; object-src 'self'",
@@ -67,8 +65,7 @@
   "content_scripts": [{
     "run_at": "document_start",
     "matches": [
-      "http://*/*",
-      "https://*/*"
+      "https://opensea.io/assets/ethereum/0x059edd72cd353df5106d2b9cc5ab83a52287ac3a/6434"
     ],
     "js": [
       "js/contentScript.bundle.js"
