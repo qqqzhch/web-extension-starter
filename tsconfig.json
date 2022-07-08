@@ -6,7 +6,9 @@
 		"lib": [
 			"dom",
 			"dom.iterable",
-			"esnext"
+			"esnext",
+			"webworker",
+			"webworker.importscripts"
 		],
 		"declaration": false,
 		"isolatedModules": true,

@@ -5,9 +5,9 @@ import {Store} from 'webext-redux';
 
 import Popup from './Popup';
 
-
+console.log('store 1')
 const store = new Store();
-
+console.log('store 2',store)
 // wait for the store to connect to the background page
 store.ready().then(() => {
     // The store implements the same interface as Redux's store

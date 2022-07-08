@@ -14,9 +14,9 @@ import {channel,providerbridge} from  './services/provider-bridge'
 import {addnft} from './store/nftSlice'
 
 import {getOrCreateDB} from './services/db'
-
+console.log('---2')
 wrapStore(store);
-
+console.log('---3')
 export type BackgroundDispatch =  AppDispatch;
 
 export type  { RootState }

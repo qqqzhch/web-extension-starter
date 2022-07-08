@@ -18,6 +18,7 @@ import {
 
 
 let Home:React.FC = () =>{
+  console.log('home')
   const [address, setAddress] = React.useState("");
   const [isaddress, setIsddress] = React.useState(true);
 

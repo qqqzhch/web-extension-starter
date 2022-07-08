@@ -45,6 +45,16 @@ const getExtensionFileType = (browser) => {
   return 'zip';
 };
 
+/**
+ * 对于 background 需要设置 globalObject: 'this'
+ * output: {
+       path: path.join(__dirname, 'dist'),
+       filename: 'bundle.js'
+       publicPath: 'http://localhost:3000',
+       globalObject: 'this'
+},
+ * **/
+
 module.exports = {
   devtool: false, // https://github.com/webpack/webpack/issues/1194#issuecomment-560382342
 
@@ -58,16 +68,14 @@ module.exports = {
   mode: nodeEnv,
 
   entry: {
-    manifest: path.join(sourcePath, 'manifest.json'),
-    contentScript: path.join(sourcePath, 'ContentScript', 'index.ts'),
-    popup: path.join(sourcePath, 'Popup', 'index.tsx'),
-    options: path.join(sourcePath, 'Options', 'index.tsx'),
-    serviceworker: path.join(sourcePath, 'Background', 'service-worker.ts'),
+    
+    background: path.join(sourcePath, 'Background', 'index.ts'),
   },
 
   output: {
     path: path.join(destPath, targetBrowser),
     filename: 'js/[name].bundle.js',
+    globalObject: "this"
   },
 
   resolve: {
@@ -139,40 +147,6 @@ module.exports = {
     new ForkTsCheckerWebpackPlugin(),
     // environmental variables
     new webpack.EnvironmentPlugin(['NODE_ENV', 'TARGET_BROWSER']),
-    // delete previous build files
-    new CleanWebpackPlugin({
-      cleanOnceBeforeBuildPatterns: [
-        path.join(process.cwd(), `extension/${targetBrowser}`),
-        path.join(
-          process.cwd(),
-          `extension/${targetBrowser}.${getExtensionFileType(targetBrowser)}`
-        ),
-      ],
-      cleanStaleWebpackAssets: false,
-      verbose: true,
-    }),
-    new HtmlWebpackPlugin({
-      template: path.join(viewsPath, 'popup.html'),
-      inject: 'body',
-      chunks: ['popup'],
-      hash: true,
-      filename: 'popup.html',
-    }),
-    new HtmlWebpackPlugin({
-      template: path.join(viewsPath, 'options.html'),
-      inject: 'body',
-      chunks: ['options'],
-      hash: true,
-      filename: 'options.html',
-    }),
-    // write css file(s) to build folder
-    new MiniCssExtractPlugin({filename: 'css/[name].css'}),
-    // copy static assets
-    new CopyWebpackPlugin({
-      patterns: [{from: 'source/assets', to: 'assets'}],
-    }),
-    // plugin to enable browser reloading in development mode
-    extensionReloaderPlugin,
   ],
 
   optimization: {
@@ -190,6 +164,20 @@ module.exports = {
       new OptimizeCSSAssetsPlugin({
         cssProcessorPluginOptions: {
           preset: ['default', {discardComments: {removeAll: true}}],
+        },
+      }),
+      new FilemanagerPlugin({
+        events: {
+          onEnd: {
+            archive: [
+              {
+                format: 'zip',
+                source: path.join(destPath, targetBrowser),
+                destination: `${path.join(destPath, targetBrowser)}.${getExtensionFileType(targetBrowser)}`,
+                options: {zlib: {level: 6}},
+              },
+            ],
+          },
         },
       }),
     ],

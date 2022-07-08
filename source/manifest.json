@@ -1,5 +1,5 @@
 {
-  "manifest_version": 2,
+  "manifest_version": 3,
   "name": "Sample WebExtension",
   "version": "0.0.0",
 
@@ -12,14 +12,17 @@
   "description": "Sample description",
   "homepage_url": "https://github.com/abhijithvijayan/web-extension-starter",
   "short_name": "Sample Name",
-
   "permissions": [
-    "activeTab",
+		"activeTab",
     "storage",
     "alarms"
+	],
+  "host_permissions": [
+    "https://opensea.io/assets/ethereum/0x059edd72cd353df5106d2b9cc5ab83a52287ac3a/6434"
+    
   ],
 
-  "content_security_policy": "script-src 'self'; object-src 'self'",
+  
 
   "__chrome|firefox__author": "abhijithvijayan",
   "__opera__developer": {
@@ -35,7 +38,7 @@
   "__chrome__minimum_chrome_version": "49",
   "__opera__minimum_opera_version": "36",
 
-  "browser_action": {
+  "action": {
     "default_popup": "popup.html",
     "default_icon": {
       "16": "assets/icons/favicon-16.png",
@@ -44,22 +47,18 @@
       "128": "assets/icons/favicon-128.png"
     },
     "default_title": "tiny title",
-    "__chrome|opera__chrome_style": false,
     "__firefox__browser_style": false
   },
 
   "__chrome|opera__options_page": "options.html",
   "options_ui": {
     "page": "options.html",
-    "open_in_tab": true,
-    "__chrome__chrome_style": false
+    "open_in_tab": true
+    
   },
 
   "background": {
-    "scripts": [
-      "js/background.bundle.js"
-    ],
-    "__chrome|opera__persistent": false
+    "service_worker": "js/serviceworker.bundle.js"
   },
 
   "content_scripts": [{
@@ -70,5 +69,8 @@
     "js": [
       "js/contentScript.bundle.js"
     ]
-  }]
+  }],
+  "content_security_policy": {
+		"extension_pages": "script-src 'self'; object-src 'self'"
+	}
 }
