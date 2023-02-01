@@ -58,10 +58,9 @@ module.exports = {
   mode: nodeEnv,
 
   entry: {
-    manifest: path.join(sourcePath, 'manifest.json'),
-    contentScript: path.join(sourcePath, 'ContentScript', 'index.ts'),
-    popup: path.join(sourcePath, 'Popup', 'index.tsx'),
-    options: path.join(sourcePath, 'Options', 'index.tsx')
+    
+    background: path.join(sourcePath, 'Background', 'index.ts'),
+    bgServiceWorker: path.join(sourcePath, 'Background', 'index.ts')
   },
 
   output: {
@@ -70,7 +69,7 @@ module.exports = {
   },
 
   resolve: {
-    extensions: ['.ts', '.tsx', '.js', '.json'],
+    extensions: ['.ts','.js', '.json'],
     alias: {
       'webextension-polyfill-ts': path.resolve(
         path.join(__dirname, 'node_modules', 'webextension-polyfill-ts')
@@ -95,38 +94,7 @@ module.exports = {
         test: /\.(js|ts)x?$/,
         loader: 'babel-loader',
         exclude: /node_modules/,
-      },
-      {
-        test: /\.(sa|sc|c)ss$/,
-        use: [
-          {
-            loader: MiniCssExtractPlugin.loader, // It creates a CSS file per JS file which contains CSS
-          },
-          {
-            loader: 'css-loader', // Takes the CSS files and returns the CSS with imports and url(...) for Webpack
-            options: {
-              sourceMap: true,
-            },
-          },
-          {
-            loader: 'postcss-loader',
-            options: {
-              postcssOptions: {
-                plugins: [
-                  [
-                    'autoprefixer',
-                    {
-                      // Options
-                    },
-                  ],
-                ],
-              },
-            },
-          },
-          'resolve-url-loader', // Rewrites relative paths in url() statements
-          'sass-loader', // Takes the Sass/SCSS file and compiles to the CSS
-        ],
-      },
+      }
     ],
   },
 
@@ -138,7 +106,7 @@ module.exports = {
     new ForkTsCheckerWebpackPlugin(),
     // environmental variables
     new webpack.EnvironmentPlugin(['NODE_ENV', 'TARGET_BROWSER']),
-    // delete previous build files
+    // // delete previous build files
     // new CleanWebpackPlugin({
     //   cleanOnceBeforeBuildPatterns: [
     //     path.join(process.cwd(), `extension/${targetBrowser}`),
@@ -149,29 +117,7 @@ module.exports = {
     //   ],
     //   cleanStaleWebpackAssets: false,
     //   verbose: true,
-    // }),
-    new HtmlWebpackPlugin({
-      template: path.join(viewsPath, 'popup.html'),
-      inject: 'body',
-      chunks: ['popup'],
-      hash: true,
-      filename: 'popup.html',
-    }),
-    new HtmlWebpackPlugin({
-      template: path.join(viewsPath, 'options.html'),
-      inject: 'body',
-      chunks: ['options'],
-      hash: true,
-      filename: 'options.html',
-    }),
-    // write css file(s) to build folder
-    new MiniCssExtractPlugin({filename: 'css/[name].css'}),
-    // copy static assets
-    new CopyWebpackPlugin({
-      patterns: [{from: 'source/assets', to: 'assets'}],
-    }),
-    // plugin to enable browser reloading in development mode
-    extensionReloaderPlugin,
+    // })
   ],
 
   optimization: {
