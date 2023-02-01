@@ -58,12 +58,11 @@ module.exports = {
   mode: nodeEnv,
 
   entry: {
-    manifest: path.join(sourcePath, 'manifest.json'),
+    manifest: path.join(sourcePath, 'manifest.v2.json'),
     background: path.join(sourcePath, 'Background', 'index.ts'),
     contentScript: path.join(sourcePath, 'ContentScript', 'index.ts'),
     popup: path.join(sourcePath, 'Popup', 'index.tsx'),
     options: path.join(sourcePath, 'Options', 'index.tsx'),
-    bgServiceWorker: path.join(sourcePath, 'Background', 'index.ts')
   },
 
   output: {
