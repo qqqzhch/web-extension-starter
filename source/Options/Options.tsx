@@ -1,8 +1,17 @@
 import * as React from 'react';
 
 import './styles.scss';
+let PORT_EXTENSION = "abc-opt"
+const port = chrome.runtime.connect({ name: PORT_EXTENSION });
 
 const Options: React.FC = () => {
+  React.useEffect(()=>{
+    port.onMessage.addListener(function(msg) {
+      console.log(msg)
+    });
+
+  })
+  
   return (
     <div>
       <form>
@@ -26,6 +35,16 @@ const Options: React.FC = () => {
 
           <p>cool cool cool</p>
         </p>
+        <button
+        id="options__button"
+        type="button"
+        onClick={() => {
+          port.postMessage({joke: "Knock knock"});
+          
+        }}
+      >
+        msg
+      </button>
       </form>
     </div>
   );

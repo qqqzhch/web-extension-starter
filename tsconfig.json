@@ -15,6 +15,7 @@
 		/* Additional Checks */
 		"useDefineForClassFields": true,
 		"skipLibCheck": true,
+		"typeRoots": [ "node_modules/@types" ]
 	},
 	"include": [
 		"source",

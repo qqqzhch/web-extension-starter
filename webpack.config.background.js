@@ -17,21 +17,6 @@ const destPath = path.join(__dirname, 'extension');
 const nodeEnv = process.env.NODE_ENV || 'development';
 const targetBrowser = process.env.TARGET_BROWSER;
 
-const extensionReloaderPlugin =
-  nodeEnv === 'development'
-    ? new ExtensionReloader({
-        port: 9090,
-        reloadPage: true,
-        entries: {
-          // TODO: reload manifest on update
-          contentScript: 'contentScript',
-          background: 'background',
-          extensionPage: ['popup', 'options'],
-        },
-      })
-    : () => {
-        this.apply = () => {};
-      };
 
 const getExtensionFileType = (browser) => {
   if (browser === 'opera') {
